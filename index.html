@@ -1,267 +1,298 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>VaxAdvisor РФ</title>
-  <script src="https://telegram.org/js/telegram-web-app.js"></script>
-  <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      background: var(--tg-theme-bg-color, #f5f5f5);
-      color: var(--tg-theme-text-color, #000);
-      padding: 12px;
-      font-size: 15px;
-      line-height: 1.4;
-    }
-    .header {
-      text-align: center;
-      padding: 16px 0;
-      margin-bottom: 16px;
-    }
-    .header h1 { font-size: 22px; margin-bottom: 4px; }
-    .header p { color: var(--tg-theme-hint-color, #999); font-size: 13px; }
-    .card {
-      background: var(--tg-theme-secondary-bg-color, #fff);
-      border-radius: 12px;
-      padding: 14px;
-      margin-bottom: 12px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-    }
-    .section-title {
-      font-weight: 600;
-      font-size: 15px;
-      margin-bottom: 10px;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-    label {
-      display: block;
-      font-size: 13px;
-      margin: 8px 0 4px;
-      color: var(--tg-theme-hint-color, #999);
-    }
-    input, select {
-      width: 100%;
-      padding: 10px;
-      border-radius: 8px;
-      border: 1px solid var(--tg-theme-hint-color, #ccc);
-      background: var(--tg-theme-bg-color, #fff);
-      color: var(--tg-theme-text-color, #000);
-      font-size: 14px;
-      margin-bottom: 8px;
-    }
-    .checkbox-group label {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      margin: 6px 0;
-      font-size: 14px;
-      color: var(--tg-theme-text-color, #000);
-      cursor: pointer;
-    }
-    .checkbox-group input {
-      width: auto;
-      margin: 0;
-    }
-    .btn {
-      background: var(--tg-theme-button-color, #3390ec);
-      color: var(--tg-theme-button-text-color, #fff);
-      border: none;
-      padding: 14px;
-      border-radius: 10px;
-      font-size: 16px;
-      font-weight: 500;
-      width: 100%;
-      cursor: pointer;
-      margin: 12px 0;
-    }
-    .btn:active { opacity: 0.9; }
-    .disclaimer {
-      font-size: 11px;
-      color: var(--tg-theme-hint-color, #999);
-      text-align: center;
-      margin-top: 12px;
-      line-height: 1.3;
-    }
-    .hidden { display: none; }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VaxAdvisor РФ</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            margin: 0;
+            padding: 16px;
+            background: #f5f5f5;
+            color: #000;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+            padding: 16px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .header h1 {
+            margin: 0 0 8px 0;
+            font-size: 24px;
+        }
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .card h3 {
+            margin: 0 0 12px 0;
+            font-size: 16px;
+            color: #333;
+        }
+        label {
+            display: block;
+            margin: 8px 0 4px 0;
+            font-size: 14px;
+            color: #666;
+        }
+        input, select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 14px;
+            box-sizing: border-box;
+            margin-bottom: 8px;
+        }
+        .checkbox-group {
+            margin: 8px 0;
+        }
+        .checkbox-group label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            padding: 6px 0;
+        }
+        .checkbox-group input[type="checkbox"] {
+            width: auto;
+            margin: 0;
+        }
+        .btn {
+            width: 100%;
+            padding: 14px;
+            background: #3390ec;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            margin: 12px 0;
+        }
+        .btn:active {
+            opacity: 0.9;
+        }
+        .result-item {
+            padding: 12px;
+            margin: 8px 0;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 4px solid #3390ec;
+        }
+        .result-item.important {
+            border-left-color: #ff6b6b;
+            background: #fff5f5;
+        }
+        .tag {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            margin-left: 8px;
+            background: #3390ec;
+            color: white;
+        }
+        .tag.important {
+            background: #ff6b6b;
+        }
+        .hidden {
+            display: none;
+        }
+        .disclaimer {
+            font-size: 11px;
+            color: #999;
+            text-align: center;
+            margin-top: 16px;
+        }
+    </style>
 </head>
 <body>
-  <div class="header">
-    <h1>💉 VaxAdvisor РФ</h1>
-    <p>30 вакцин · Нацкалендарь · Путешествия</p>
-  </div>
-
-  <div class="card">
-    <div class="section-title">👤 Параметры</div>
-    <label>Возраст (лет)</label>
-    <input type="number" id="age" placeholder="30" min="0" max="120">
-    
-    <label>Пол</label>
-    <select id="gender">
-      <option value="">Не указано</option>
-      <option value="M">Мужской</option>
-      <option value="F">Женский</option>
-    </select>
-  </div>
-
-  <div class="card">
-    <div class="section-title">🩺 Заболевания</div>
-    <div class="checkbox-group">
-      <label><input type="checkbox" id="diabetes"> Сахарный диабет</label>
-      <label><input type="checkbox" id="lung_disease"> ХОБЛ / астма</label>
-      <label><input type="checkbox" id="heart_disease"> Болезни сердца</label>
-      <label><input type="checkbox" id="diabetes"> Сахарный диабет</label>
-      <label><input type="checkbox" id="immunodeficiency"> Иммунодефицит</label>
+    <div class="header">
+        <h1>💉 VaxAdvisor РФ</h1>
+        <p>30 вакцин · Нацкалендарь · Путешествия</p>
     </div>
-  </div>
 
-  <div class="card">
-    <div class="section-title">🤰 Репродуктивное здоровье</div>
-    <div class="checkbox-group">
-      <label><input type="checkbox" id="pregnancy_planning"> Планирование беременности</label>
-      <label><input type="checkbox" id="pregnant"> Текущая беременность</label>
+    <div class="card">
+        <h3>👤 Параметры</h3>
+        <label>Возраст (лет)</label>
+        <input type="number" id="age" placeholder="30" min="0" max="120">
+        
+        <label>Пол</label>
+        <select id="gender">
+            <option value="">Не указано</option>
+            <option value="M">Мужской</option>
+            <option value="F">Женский</option>
+        </select>
     </div>
-  </div>
 
-  <div class="card">
-    <div class="section-title">💼 Профессия</div>
-    <div class="checkbox-group">
-      <label><input type="checkbox" id="med_worker"> Медработник</label>
-      <label><input type="checkbox" id="vet"> Ветеринар</label>
-      <label><input type="checkbox" id="education"> Педагог</label>
-    </div>
-  </div>
-
-  <div class="card">
-    <div class="section-title">✈️ Путешествия</div>
-    <div class="checkbox-group">
-      <label><input type="checkbox" id="travel_asia"> Южная / ЮВА</label>
-      <label><input type="checkbox" id="travel_africa"> Африка / Лат. Америка</label>
-      <label><input type="checkbox" id="travel_rabies"> Регионы с бешенством</label>
-    </div>
-  </div>
-
-  <button class="btn" id="calcBtn">💉 Получить рекомендации</button>
-  <p class="disclaimer">⚠️ Информационный инструмент. Основан на Приказе Минздрава РФ №1122н, ВОЗ, CDC. Решение принимает лечащий врач.</p>
-
-  <div id="results" class="card hidden">
-    <div class="section-title">📋 Рекомендации</div>
-    <div id="output"></div>
-    <button class="btn" id="backBtn" style="background: var(--tg-theme-secondary-bg-color, #fff); color: var(--tg-theme-text-color, #000); border: 1px solid var(--tg-theme-hint-color, #ccc); margin-top: 12px;">← Изменить параметры</button>
-  </div>
-
-  <script>
-    // Инициализация Telegram WebApp
-    let tg = null;
-    try {
-      tg = window.Telegram.WebApp;
-      tg.ready();
-      tg.expand();
-    } catch(e) {
-      console.log('Telegram WebApp не доступен, работаем в обычном режиме');
-    }
-
-    // Элементы
-    const calcBtn = document.getElementById('calcBtn');
-    const backBtn = document.getElementById('backBtn');
-    const results = document.getElementById('results');
-    const output = document.getElementById('output');
-
-    // Логика расчёта
-    function getRecommendations() {
-      const age = parseInt(document.getElementById('age').value) || 0;
-      const gender = document.getElementById('gender').value;
-      const recs = [];
-
-      // Базовые рекомендации
-      recs.push({ name: 'Грипп', tag: 'Ежегодно', important: false });
-      
-      if (age < 18 || age > 60) {
-        recs.push({ name: 'Корь/Краснуха/Паротит', tag: 'Нацкалендарь', important: false });
-      }
-      
-      // Группы риска
-      if (document.getElementById('diabetes').checked || 
-          document.getElementById('lung_disease').checked ||
-          document.getElementById('heart_disease').checked ||
-          age >= 65) {
-        recs.push({ name: 'Пневмококковая инфекция', tag: 'Группа риска', important: true });
-      }
-      
-      // Путешествия
-      if (document.getElementById('travel_asia').checked || document.getElementById('travel_africa').checked) {
-        recs.push({ name: 'Гепатит A', tag: 'Путешествия', important: false });
-        recs.push({ name: 'Брюшной тиф', tag: 'Путешествия', important: false });
-      }
-      
-      if (document.getElementById('travel_rabies').checked) {
-        recs.push({ name: 'Бешенство', tag: 'Путешествия', important: true });
-      }
-      
-      // Профессии
-      if (document.getElementById('med_worker').checked) {
-        recs.push({ name: 'Гепатит B', tag: 'Профессия', important: true });
-      }
-      
-      // Беременность
-      if (document.getElementById('pregnant').checked) {
-        recs.push({ name: 'Коклюш (АДС-М)', tag: 'Беременность', important: true });
-        recs.push({ name: 'Грипп', tag: 'Беременность', important: true });
-      }
-
-      return recs;
-    }
-
-    function renderResults(recs) {
-      if (recs.length === 0) {
-        return '<p style="color: var(--tg-theme-hint-color, #999)">✅ По вашим параметрам все рекомендуемые вакцины уже учтены.</p>';
-      }
-      return recs.map(r => `
-        <div style="padding: 10px; margin: 6px 0; border-radius: 8px; background: var(--tg-theme-bg-color, #f5f5f5); border-left: 4px solid ${r.important ? '#ff6b6b' : 'var(--tg-theme-button-color, #3390ec)'}">
-          <strong>${r.name}</strong>
-          ${r.tag ? `<span style="display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 11px; margin-left: 6px; background: ${r.important ? '#ff6b6b' : 'var(--tg-theme-button-color, #3390ec)'}; color: white;">${r.tag}</span>` : ''}
+    <div class="card">
+        <h3>🩺 Заболевания</h3>
+        <div class="checkbox-group">
+            <label><input type="checkbox" id="diabetes"> Сахарный диабет</label>
+            <label><input type="checkbox" id="lung_disease"> ХОБЛ / астма</label>
+            <label><input type="checkbox" id="liver_disease"> Болезни печени</label>
+            <label><input type="checkbox" id="kidney_disease"> Болезни почек</label>
+            <label><input type="checkbox" id="heart_disease"> Болезни сердца</label>
+            <label><input type="checkbox" id="immunodeficiency"> Иммунодефицит</label>
         </div>
-      `).join('');
-    }
+    </div>
 
-    // Обработчики
-    calcBtn.addEventListener('click', () => {
-      const recs = getRecommendations();
-      output.innerHTML = renderResults(recs);
-      results.classList.remove('hidden');
-      calcBtn.classList.add('hidden');
-      
-      // Показываем MainButton если доступен Telegram
-      if (tg && tg.MainButton) {
-        tg.MainButton.setText('📤 Отправить результат боту');
-        tg.MainButton.show();
-      }
-    });
+    <div class="card">
+        <h3>🤰 Репродуктивное здоровье</h3>
+        <div class="checkbox-group">
+            <label><input type="checkbox" id="pregnancy_planning"> Планирование беременности</label>
+            <label><input type="checkbox" id="pregnant"> Текущая беременность</label>
+        </div>
+    </div>
 
-    backBtn.addEventListener('click', () => {
-      results.classList.add('hidden');
-      calcBtn.classList.remove('hidden');
-      if (tg && tg.MainButton) {
-        tg.MainButton.hide();
-      }
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    });
+    <div class="card">
+        <h3>💼 Профессия</h3>
+        <div class="checkbox-group">
+            <label><input type="checkbox" id="med_worker"> Медработник</label>
+            <label><input type="checkbox" id="lab_worker"> Лаборант</label>
+            <label><input type="checkbox" id="vet"> Ветеринар</label>
+            <label><input type="checkbox" id="education"> Педагог</label>
+            <label><input type="checkbox" id="military"> Военнослужащий</label>
+        </div>
+    </div>
 
-    // Отправка данных боту
-    if (tg && tg.MainButton) {
-      tg.MainButton.onClick(() => {
-        const data = {
-          age: document.getElementById('age').value,
-          gender: document.getElementById('gender').value,
-          recommendations: getRecommendations().map(r => r.name)
-        };
-        tg.sendData(JSON.stringify(data));
-      });
-    }
-  </script>
+    <div class="card">
+        <h3>✈️ Путешествия</h3>
+        <div class="checkbox-group">
+            <label><input type="checkbox" id="travel_asia"> Южная / ЮВА</label>
+            <label><input type="checkbox" id="travel_africa"> Африка / Лат. Америка</label>
+            <label><input type="checkbox" id="travel_rabies"> Регионы с бешенством</label>
+        </div>
+    </div>
+
+    <button class="btn" id="calcBtn">💉 Получить рекомендации</button>
+    
+    <p class="disclaimer">⚠️ Информационный инструмент. Основан на Приказе Минздрава РФ №1122н, ВОЗ, CDC.</p>
+
+    <div id="results" class="card hidden">
+        <h3>📋 Рекомендации</h3>
+        <div id="output"></div>
+        <button class="btn" id="backBtn" style="background: #6c757d; margin-top: 12px;">← Изменить параметры</button>
+    </div>
+
+    <script>
+        // Инициализация Telegram
+        var tg = null;
+        try {
+            if (window.Telegram && window.Telegram.WebApp) {
+                tg = window.Telegram.WebApp;
+                tg.ready();
+                tg.expand();
+            }
+        } catch(e) {
+            console.log('Telegram WebApp не доступен');
+        }
+
+        // Элементы
+        var calcBtn = document.getElementById('calcBtn');
+        var backBtn = document.getElementById('backBtn');
+        var results = document.getElementById('results');
+        var output = document.getElementById('output');
+
+        // Расчёт рекомендаций
+        function getRecommendations() {
+            var age = parseInt(document.getElementById('age').value) || 0;
+            var recs = [];
+
+            // Грипп — всем
+            recs.push({ name: 'Грипп', tag: 'Ежегодно', important: false });
+
+            // Нацкалендарь
+            if (age < 18 || age > 60) {
+                recs.push({ name: 'Корь/Краснуха/Паротит', tag: 'Нацкалендарь', important: false });
+            }
+
+            // Группы риска — пневмококк
+            if (document.getElementById('diabetes').checked || 
+                document.getElementById('lung_disease').checked ||
+                document.getElementById('heart_disease').checked ||
+                document.getElementById('kidney_disease').checked ||
+                age >= 65) {
+                recs.push({ name: 'Пневмококковая инфекция', tag: 'Группа риска', important: true });
+            }
+
+            // Путешествия
+            if (document.getElementById('travel_asia').checked || document.getElementById('travel_africa').checked) {
+                recs.push({ name: 'Гепатит A', tag: 'Путешествия', important: false });
+                recs.push({ name: 'Брюшной тиф', tag: 'Путешествия', important: false });
+            }
+            
+            if (document.getElementById('travel_rabies').checked) {
+                recs.push({ name: 'Бешенство', tag: 'Путешествия', important: true });
+            }
+
+            // Профессии
+            if (document.getElementById('med_worker').checked) {
+                recs.push({ name: 'Гепатит B', tag: 'Профессия', important: true });
+            }
+
+            // Беременность
+            if (document.getElementById('pregnant').checked) {
+                recs.push({ name: 'Коклюш (АДС-М)', tag: 'Беременность', important: true });
+            }
+
+            return recs;
+        }
+
+        // Отображение результатов
+        function renderResults(recs) {
+            if (recs.length === 0) {
+                return '<p>✅ По вашим параметрам все рекомендуемые вакцины уже учтены.</p>';
+            }
+            return recs.map(function(r) {
+                return '<div class="result-item' + (r.important ? ' important' : '') + '">' +
+                    '<strong>' + r.name + '</strong>' +
+                    (r.tag ? '<span class="tag' + (r.important ? ' important' : '') + '">' + r.tag + '</span>' : '') +
+                    '</div>';
+            }).join('');
+        }
+
+        // Обработчики
+        calcBtn.addEventListener('click', function() {
+            var recs = getRecommendations();
+            output.innerHTML = renderResults(recs);
+            results.classList.remove('hidden');
+            calcBtn.classList.add('hidden');
+            
+            if (tg && tg.MainButton) {
+                tg.MainButton.setText('📤 Отправить результат');
+                tg.MainButton.show();
+            }
+        });
+
+        backBtn.addEventListener('click', function() {
+            results.classList.add('hidden');
+            calcBtn.classList.remove('hidden');
+            if (tg && tg.MainButton) {
+                tg.MainButton.hide();
+            }
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // Отправка данных
+        if (tg && tg.MainButton) {
+            tg.MainButton.onClick(function() {
+                var data = {
+                    age: document.getElementById('age').value,
+                    recommendations: getRecommendations().map(function(r) { return r.name; })
+                };
+                tg.sendData(JSON.stringify(data));
+            });
+        }
+    </script>
 </body>
 </html>
